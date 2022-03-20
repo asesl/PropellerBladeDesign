@@ -104,9 +104,9 @@ class Ui_Dialog(object):
         self.labelFoilType.setText(tr('PropellerBlade','Foil Type:'))
         self.labelHelp.setText(tr('PropellerBlade',
                                   'This Macro creates \na single propeller\nblade'))
-        self.labelType.setText(tr('PropellerBlade', 'Left or Right Hand'))
-        self.radioLeftHand.setText(tr('PropellerBlade', 'Left Handed'))
-        self.radioRightHand.setText(tr('PropellerBlade', 'Right Handed'))
+        self.labelType.setText(tr('PropellerBlade', 'Propeller Rotation Direction'))
+        self.radioLeftHand.setText(tr('PropellerBlade', 'Left Handed [CW]'))
+        self.radioRightHand.setText(tr('PropellerBlade', 'Right Handed [CCW]'))
 
 
     def onInputFileButtonClicked(self):
