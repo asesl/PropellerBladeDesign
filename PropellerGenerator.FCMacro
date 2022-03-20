@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+
+__Name__ = 'Propeller Generator'
+__Comment__ = 'Propeller Generator'
+__Author__ = 'Austin Eslinger'
+__Version__ = '0.5.0'
+__Date__ = '2022-03-12'
+__License__ = ''
+__Web__ = ''
+__Wiki__ = ''
+__Icon__ = ''
+__Help__ = ''
+__Status__ = ''
+__Requires__ = ''
+__Communication__ = ''
+__Files__ = 'propeller_generator/__init__.py,propeller_generator/propeller_generator.py,propeller_generator/propeller_blade.py,propeller_generator/wingtools.py'
+
+import sys
+import pathlib
+import FreeCAD
+
+if __name__ == '__main__':
+    #running as a macro. Load as module, to support save-restore.
+    try:
+        FreeCAD.Console.PrintMessage(pathlib.Path(__file__).absolute().parents[0])
+        sys.path.append(pathlib.Path(__file__).absolute().parents[0])
+        from propeller_generator import propeller_blade
+    except ImportError as err:
+        FreeCAD.Console.PrintError("Macro Propeller Generator: failed to import propeller_generator.py. The parametric object will lose functionality after saving-loading your project, sorry.")
+    else:
+        from propeller_generator.propeller_generator import showDialog
+        showDialog()
