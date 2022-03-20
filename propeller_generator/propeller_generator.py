@@ -98,7 +98,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(tr('PropellerBlade', 'Propeller Blade Creator'))
-        self.labelSpanLength.setText(tr('PropellerBlade', 'Blade Span'))
+        self.labelSpanLength.setText(tr('PropellerBlade', 'Blade Span [mm]'))
         self.labelGeometryFile.setText(tr('PropellerBlade',
                                      'Geometry File Name...'))
         self.labelFoilType.setText(tr('PropellerBlade','Foil Type:'))
