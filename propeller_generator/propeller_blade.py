@@ -12,42 +12,16 @@ class PropellerBlade(object):
         self.geo_file_name = geo_file_name
         self.span_length = span_length
         self.left_or_right = left_or_right
-
-    # blade_generator.py is a module that allows a user to automatically generate propeller geometries (currently only for the Mavic Pro blade)
 	
-    def make_MavicPro(self):
+    def make_PropellerBlade(self):
         
         # This is the function that needs to be ran from FreeCAD in order to generate Mavic Pro compatible blades.
-        # Here are instructions for running this function:
-        # 1. Open FreeCAD and go to Macros -> Macros... in the navigation bar
-        # 2. Under User Macros, select the elipses (...) and navigate to CAD_generation/Macros
-        # 3. Run blade_generator_import.py
-        # 4. Copy a reference geometry file from the CAD_Templates folder to a location of your choosing and rename it
-        # 5. Open the newly renamed FreeCAD file
-        # 6. Import the blade generator tool by typing the following code into the Python console in FreeCAD:
-        #    import blade_generator
-        # 7. Run the function by typing:
-        #    blade_generator.make_MavicPro('MH114','blade_geometry_retwist')
-        # Note, the foil type (MH114 in the above example) can be any foil saved in the Air_Foils folder and the
-        # geometry file (blade_geometry_retwist in the above example) can be the name of any file in the Blade_Geometry file.
-        
-        # This value is  specific to the Mavic Pro blade
-        # span_length = 105 #mm
-        #for i in range(2):
-            
-            # if i == 0:
-            # # Change this value depending on which type of blade you want to spit out
-            #     self.left_or_right = -1 # Left = -1, Right = 1
-            # else:
-        #self.left_or_right = 1
-            
+  
         pathName = str(pathlib.Path(__file__).parent.absolute())
         
         # Get the foil shape from the foil folder
-        #Air_foil_raw = np.genfromtxt(pathName+'/Air_Foils/' + foil_type + '.csv', delimiter=',')
         Air_foil_raw = wt.get_foil(self.foil_type)
         # This file contains pertinant geometric data for creating the 3-D CAD
-        #export_data = np.genfromtxt(pathName+'/Blade_Geometry/' +self.geo_file_name + '.csv', delimiter=',')
         export_data = np.genfromtxt(self.geo_file_name, delimiter=',')
 
         # Orient the foil for either a left or right hand blade
@@ -61,8 +35,7 @@ class PropellerBlade(object):
         chord = export_data[:,1]
         twist_array =   export_data[:,2]*self.left_or_right
         x_trans_array = export_data[:,3]*self.left_or_right # Sweep array
-        y_trans_array = export_data[:,6] # Dihedral array
-        chord_rotation_perc = export_data[:,5] 
+        y_trans_array = export_data[:,4] # Dihedral array
         
         PlaneObj = wt.add_planes(len(z_array),self.span_length) # Create the planes within the open FreeCAD part.
         sketch_list = [] # Create empty array of sketches that will eventually get lofted
@@ -78,18 +51,8 @@ class PropellerBlade(object):
             sketch_list.append(sketch)   
             
             sketch.ViewObject.Visibility = 0
-
-        # # Make all the cuts for either left or right hand blades    
-        # if self.left_or_right == -1: # Left Side
             
-        #     # Loft all the sketches together into a solid blade
-        #     Loft_L = wt.add_loft(sketch_list)   
-            
-            
-            
-        # else: # Right Side
-            
-        #     # Loft all the sketches together into a solid blade
+        # Loft all the sketches together into a solid blade
         My_Loft = wt.add_loft(sketch_list) 
 
         FreeCAD.activeDocument().recompute()

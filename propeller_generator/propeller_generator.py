@@ -31,12 +31,12 @@ def say(s):
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
+        
         Dialog.setObjectName("PropellerBlade")
         self.dia = Dialog
         self.gridLayoutWidget = QtGui.QWidget(Dialog)
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.gridLayout = QtGui.QGridLayout(self.gridLayoutWidget)
-        #self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
 
         self.labelHelp = QtGui.QLabel(self.gridLayoutWidget)
@@ -63,10 +63,11 @@ class Ui_Dialog(object):
         self.labelFoilType = QtGui.QLabel(self.gridLayoutWidget)
         self.labelFoilType.setObjectName('labelFoilType')
         self.gridLayout.addWidget(self.labelFoilType, 3, 0)
+
+        # Create dropdown box with all airfoil files in the Air_Foils folder
         self.dropdownFoilType = QtGui.QComboBox()
         airFoilsPath = str(pathlib.Path(__file__).absolute().parents[0]) + "/Air_Foils"
         self.dropdownFoilType.addItems([f for f in listdir(airFoilsPath) if isfile(join(airFoilsPath, f))])
-        #self.dropdownFoilType.clicked.connect(self.onInputFileButtonClicked)
         self.dropdownFoilType.setObjectName('FileSelectionButton')
         self.gridLayout.addWidget(self.dropdownFoilType, 3, 1)
         
@@ -135,7 +136,7 @@ class Ui_Dialog(object):
             left_or_right = 1
 
         myPropeller = pb.PropellerBlade(foil_type, geo_file_name, span_length, left_or_right, doc)
-        myPropeller.make_MavicPro()
+        myPropeller.make_PropellerBlade()
         self.dia.close()
         doc.recompute()
 
@@ -148,8 +149,5 @@ def showDialog():
     d = QtGui.QWidget()
     d.ui = Ui_Dialog()
     d.ui.setupUi(d)
-   # d.ui.lineEditGeometryFile.setText('2')
-    #d.ui.lineEditSpanLength.setProperty('text', '2 m')
-
     d.resize(500,500)
     d.show()
